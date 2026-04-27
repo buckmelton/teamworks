@@ -8,10 +8,18 @@
 .app h1 {
   margin-top: 0;
   text-transform: capitalize;
+  text-align: left;
 }
 
 .error {
   color: #b91c1c;
+}
+
+.filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
 }
 
 .pokemon-grid {

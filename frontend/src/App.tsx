@@ -66,30 +66,32 @@ function App() {
       {error && <p className="error">Error: {error}</p>}
       {!isLoading && !error && (
         <>
-          <label htmlFor="type-filter">
-            Filter by type:{' '}
-            <select
-              id="type-filter"
-              value={selectedType}
-              onChange={(event) => setSelectedType(event.target.value)}
-            >
-              {typeOptions.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="name-filter">
-            Filter by name:{' '}
-            <input
-              id="name-filter"
-              type="text"
-              value={nameQuery}
-              onChange={(event) => setNameQuery(event.target.value)}
-              placeholder="e.g. char"
-            />
-          </label>
+          <div className="filters-row">
+            <label htmlFor="type-filter">
+              Filter by type:{' '}
+              <select
+                id="type-filter"
+                value={selectedType}
+                onChange={(event) => setSelectedType(event.target.value)}
+              >
+                {typeOptions.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="name-filter">
+              Filter by name:{' '}
+              <input
+                id="name-filter"
+                type="text"
+                value={nameQuery}
+                onChange={(event) => setNameQuery(event.target.value)}
+                placeholder="e.g. char"
+              />
+            </label>
+          </div>
           <section className="pokemon-grid">
             {filteredPokemon.map((item) => (
               <article className="pokemon-card" key={item.id}>
