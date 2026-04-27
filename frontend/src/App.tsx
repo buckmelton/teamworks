@@ -14,6 +14,20 @@ function App() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>('')
+  const [selectedType, setSelectedType] = useState<string>('all')
+
+  const typeOptions = ['all', ...new Set(pokemon.flatMap((item) => item.types))].sort(
+    (a, b) => {
+      if (a === 'all') return -1
+      if (b === 'all') return 1
+      return a.localeCompare(b)
+    },
+  )
+
+  const filteredPokemon =
+    selectedType === 'all'
+      ? pokemon
+      : pokemon.filter((item) => item.types.includes(selectedType))
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -44,19 +58,35 @@ function App() {
       {isLoading && <p>Loading...</p>}
       {error && <p className="error">Error: {error}</p>}
       {!isLoading && !error && (
-        <section className="pokemon-grid">
-          {pokemon.map((item) => (
-            <article className="pokemon-card" key={item.id}>
-              <h2>{item.name}</h2>
-              {item.sprite ? (
-                <img src={item.sprite} alt={item.name} />
-              ) : (
-                <div className="sprite-placeholder">No image</div>
-              )}
-              <p>Types: {item.types.join(', ')}</p>
-            </article>
-          ))}
-        </section>
+        <>
+          <label htmlFor="type-filter">
+            Filter by type:{' '}
+            <select
+              id="type-filter"
+              value={selectedType}
+              onChange={(event) => setSelectedType(event.target.value)}
+            >
+              {typeOptions.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </label>
+          <section className="pokemon-grid">
+            {filteredPokemon.map((item) => (
+              <article className="pokemon-card" key={item.id}>
+                <h2>{item.name}</h2>
+                {item.sprite ? (
+                  <img src={item.sprite} alt={item.name} />
+                ) : (
+                  <div className="sprite-placeholder">No image</div>
+                )}
+                <p>Types: {item.types.join(', ')}</p>
+              </article>
+            ))}
+          </section>
+        </>
       )}
     </main>
   )
