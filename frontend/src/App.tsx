@@ -15,6 +15,8 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>('')
   const [selectedType, setSelectedType] = useState<string>('all')
+  const [nameQuery, setNameQuery] = useState<string>('')
+  const normalizedNameQuery = nameQuery.trim().toLowerCase()
 
   const typeOptions = ['all', ...new Set(pokemon.flatMap((item) => item.types))].sort(
     (a, b) => {
@@ -24,10 +26,15 @@ function App() {
     },
   )
 
-  const filteredPokemon =
-    selectedType === 'all'
-      ? pokemon
-      : pokemon.filter((item) => item.types.includes(selectedType))
+  const filteredPokemon = pokemon.filter((item) => {
+    const matchesType =
+      selectedType === 'all' || item.types.includes(selectedType)
+    const matchesName =
+      normalizedNameQuery === '' ||
+      item.name.toLowerCase().includes(normalizedNameQuery)
+
+    return matchesType && matchesName
+  })
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -72,6 +79,16 @@ function App() {
                 </option>
               ))}
             </select>
+          </label>
+          <label htmlFor="name-filter">
+            Filter by name:{' '}
+            <input
+              id="name-filter"
+              type="text"
+              value={nameQuery}
+              onChange={(event) => setNameQuery(event.target.value)}
+              placeholder="e.g. char"
+            />
           </label>
           <section className="pokemon-grid">
             {filteredPokemon.map((item) => (
