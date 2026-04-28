@@ -1,4 +1,4 @@
-# Teamworks Fullstack Boilerplate
+# Teamworks Coding Assignment - Pokemon & PokeAPI
 
 Minimal monorepo-style starter with:
 - `backend/`: FastAPI service
