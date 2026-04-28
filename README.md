@@ -1,6 +1,6 @@
 # Teamworks Coding Assignment - Pokemon & PokeAPI
 
-Minimal monorepo-style starter with:
+Minimal monorepo-style project for solving Teamworks Coding Interview Assignment with:
 - `backend/`: FastAPI service
 - `frontend/`: React + TypeScript app built with Vite
 
